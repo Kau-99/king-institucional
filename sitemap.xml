@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Home -->
+  <url>
+    <loc>https://www.kinginsulation.com/</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.kinginsulation.com/imagens/king-insulation-hero.webp</image:loc>
+      <image:title>King Insulation — Premium Insulation Services</image:title>
+    </image:image>
+  </url>
+
+  <!-- About Us -->
+  <url>
+    <loc>https://www.kinginsulation.com/about.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.kinginsulation.com/imagens/king-insulation-logo.webp</image:loc>
+      <image:title>About King Insulation — Our Story and Team</image:title>
+    </image:image>
+  </url>
+
+  <!-- Services -->
+  <url>
+    <loc>https://www.kinginsulation.com/services.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.kinginsulation.com/imagens/servicos/fiberglass.webp</image:loc>
+      <image:title>Fiberglass Insulation Services</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.kinginsulation.com/imagens/servicos/spray-foam.webp</image:loc>
+      <image:title>Spray Foam Insulation Services</image:title>
+    </image:image>
+  </url>
+
+  <!-- Projects -->
+  <url>
+    <loc>https://www.kinginsulation.com/projects.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://www.kinginsulation.com/contact.html</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

@@ -1,0 +1,14 @@
+# robots.txt — King Insulation
+# https://www.kinginsulation.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Block access to server-side files and utility directories
+Disallow: /vendor/
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /imagens/favicon/
+
+# Sitemap location (submitted to Google Search Console separately)
+Sitemap: https://www.kinginsulation.com/sitemap.xml

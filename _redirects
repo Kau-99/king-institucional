@@ -1,0 +1,18 @@
+# Cloudflare Pages — _redirects
+# Old Portuguese pages → English equivalents
+/sobre.html         /about.html         301
+/servicos.html      /services.html      301
+/projetos.html      /projects.html      301
+/contato.html       /contact.html       301
+
+# .php extension fallbacks (in case anyone bookmarked old URLs)
+/about.php          /about.html         301
+/services.php       /services.html      301
+/projects.php       /projects.html      301
+/contact.php        /contact.html       301
+
+# Trailing-slash normalisation
+/about/             /about.html         301
+/services/          /services.html      301
+/projects/          /projects.html      301
+/contact/           /contact.html       301

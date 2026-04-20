@@ -433,3 +433,28 @@ window.addEventListener('load', () => {
 (function initTooltips() {
   document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => new bootstrap.Tooltip(el));
 })();
+
+// Real-time form validation on blur (Bootstrap is-valid / is-invalid)
+(function blurValidation() {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  // All required fields + the email field (which has format validation)
+  const fields = form.querySelectorAll('input[required], textarea[required], input[type="email"]');
+
+  fields.forEach(field => {
+    // Show validation state when the user leaves the field
+    field.addEventListener('blur', () => {
+      const valid = field.checkValidity();
+      field.classList.toggle('is-valid',   valid);
+      field.classList.toggle('is-invalid', !valid);
+    });
+
+    // As the user types after an invalid blur, promote to valid as soon as it passes
+    field.addEventListener('input', () => {
+      if (field.classList.contains('is-invalid') && field.checkValidity()) {
+        field.classList.replace('is-invalid', 'is-valid');
+      }
+    });
+  });
+})();

@@ -1,0 +1,24 @@
+# Cloudflare Pages — _headers
+
+# Security headers for all pages
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.google.com https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://www.google.com; connect-src 'self' https://formspree.io;
+
+# Long-lived cache for images (1 year)
+/imagens/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Long-lived cache for CSS/JS (1 year)
+/style.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/script.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# No cache for HTML pages (always fresh)
+/*.html
+  Cache-Control: no-cache, no-store, must-revalidate

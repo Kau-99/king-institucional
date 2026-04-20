@@ -619,6 +619,16 @@ img[loading="eager"]{ opacity: 1; }
 .page-transition.active{ opacity: 1; pointer-events: auto; }
 
 /* ==========================
+   ScrollSpy — Services subnav active state
+   Bootstrap ScrollSpy adds .active to the matching .nav-link
+========================== */
+.subnav-link.active {
+  color: var(--gold) !important;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+/* ==========================
    Melhorias responsivas extras
 ========================== */
 @media (max-width: 767.98px){
