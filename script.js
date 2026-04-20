@@ -123,6 +123,14 @@ function showToast(msg, type) {
 
   document.getElementById('modalPrev')?.addEventListener('click', () => openAt(currentIndex - 1));
   document.getElementById('modalNext')?.addEventListener('click', () => openAt(currentIndex + 1));
+
+  // Touch swipe support for mobile
+  let touchStartX = 0;
+  modalEl.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  modalEl.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 48) dx < 0 ? openAt(currentIndex + 1) : openAt(currentIndex - 1);
+  }, { passive: true });
 })();
 
 // Project filters
@@ -148,24 +156,25 @@ function showToast(msg, type) {
   });
 })();
 
-// Contact form validation + simulated submission
+// Contact form — real submission via Formspree + improved phone mask
 (function contactForm() {
   const form = document.getElementById('contactForm');
   if (!form) return;
 
-  // Phone mask (US format)
+  // Phone mask (US format) — handles deletion and paste correctly
   const telInput = form.querySelector('#phone');
   if (telInput) {
-    telInput.addEventListener('input', () => {
-      let v = telInput.value.replace(/\D/g, '').slice(0, 10);
-      if (v.length > 6) v = `(${v.slice(0, 3)}) ${v.slice(3, 6)}-${v.slice(6)}`;
-      else if (v.length > 3) v = `(${v.slice(0, 3)}) ${v.slice(3)}`;
-      else if (v.length) v = `(${v}`;
-      telInput.value = v;
+    telInput.addEventListener('input', function () {
+      const digits = this.value.replace(/\D/g, '').slice(0, 10);
+      if (!digits.length) { this.value = ''; return; }
+      let out = '(' + digits.slice(0, 3);
+      if (digits.length > 3) out += ') ' + digits.slice(3, 6);
+      if (digits.length > 6) out += '-' + digits.slice(6);
+      this.value = out;
     });
   }
 
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -177,10 +186,18 @@ function showToast(msg, type) {
     }
 
     const btn = form.querySelector('[type="submit"]');
+    const status = document.getElementById('formStatus');
     if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-    setTimeout(() => {
-      const status = document.getElementById('formStatus');
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (!res.ok) throw new Error('Server error ' + res.status);
+
       if (status) {
         status.classList.remove('d-none');
         status.classList.add('text-success');
@@ -193,25 +210,27 @@ function showToast(msg, type) {
         if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
         if (status) { status.classList.add('d-none'); status.classList.remove('text-success'); }
       }, 3000);
-    }, 900);
+    } catch {
+      showToast('Failed to send — please call or email us directly.', 'error');
+      if (btn) { btn.disabled = false; btn.textContent = 'Send Message'; }
+    }
   }, false);
 })();
 
-// Copy contact info buttons
+// Copy contact info buttons — uses Clipboard API only (execCommand removed)
 (function copyButtons() {
   document.querySelectorAll('.copy-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
       const value = btn.getAttribute('data-copy') || '';
+      if (!navigator.clipboard) {
+        showToast('Auto-copy unavailable — please copy manually: ' + value, 'error');
+        return;
+      }
       try {
         await navigator.clipboard.writeText(value);
         showToast('Copied: ' + value);
       } catch {
-        const ta = document.createElement('textarea');
-        ta.value = value; ta.style.position = 'fixed'; ta.style.opacity = '0';
-        document.body.appendChild(ta); ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showToast('Copied: ' + value);
+        showToast('Permission denied. Copy manually: ' + value, 'error');
       }
     });
   });
